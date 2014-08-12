@@ -1,10 +1,9 @@
-include build/easybake.mk
 
-include $(MODULE)
-module=test
-srcs=test.cpp
+LOCAL_PATH := $(call my-dir)
 
-include $(MODULE)
+include $(DEFINE_MODULE)
+MODULE := test
+LOCAL_SRCS := cool.c test.c 
 
-test:
-	@echo $(TOP)
+include $(BUILD_LIBRARY)
+

@@ -1,2 +1,0 @@
-
-@(warning "TOP=$(TOP)")

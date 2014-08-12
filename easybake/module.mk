@@ -1,0 +1,5 @@
+
+LOCAL_OBJS :=
+LOCAL_C_SOURCES :=
+LOCAL_CPP_SOURCES :=
+$(info "New module")
