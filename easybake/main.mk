@@ -60,11 +60,14 @@ endef
 
 .PHONY: all clean
 
-all: $(ALL_MODULES)
+all: 
 
 clean:
 	rm -rf $(BUILDDIR)
 
 include $(wildcard $(TOP)/easybake.mk)
+
+all: $(ALL_MODULES)
+
 
 

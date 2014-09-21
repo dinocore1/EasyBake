@@ -26,4 +26,3 @@ $(LOCAL_EXE): $(LOCAL_OBJS) $(LOCAL_SHARED_LIBS)
 endef
 
 $(eval $(call exec_template))
-
