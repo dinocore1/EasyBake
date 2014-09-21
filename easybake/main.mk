@@ -21,6 +21,12 @@ define all-makefiles-under
 $(wildcard $(1)/*/easybake.mk)
 endef
 
+define make-intermediate-dir
+$(intermediateDirObj):
+	$(SILENT) mkdir -p $(intermediateDir)
+	$(SILENT) touch $(intermediateDirObj)
+endef
+
 
 ############ C/C++ definitions ################
 

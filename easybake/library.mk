@@ -1,12 +1,10 @@
-ALL_MODULES += $(MODULE)
+$(eval ALL_MODULES += $(MODULE))
 .PHONY: $(MODULE)
 
-intermediateDir := $(BUILDDIR)/$(MODULE)
-intermediateDirObj := $(intermediateDir)/.marker
+$(eval intermediateDir := $(BUILDDIR)/$(MODULE))
+$(eval intermediateDirObj := $(intermediateDir)/.marker)
 
-$(intermediateDirObj):
-	$(SILENT) mkdir -p $(intermediateDir)
-	$(SILENT) touch $(intermediateDirObj)
+$(eval $(call make-intermediate-dir))
 
 
 LOCAL_C_SOURCES += $(filter %.c,$(LOCAL_SRCS))

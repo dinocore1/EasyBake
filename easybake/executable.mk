@@ -1,11 +1,9 @@
-ALL_MODULES += $(MODULE)
+$(eval ALL_MODULES += $(MODULE))
 
-intermediateDir := $(BUILDDIR)/$(MODULE)/objs
-intermediateDirObj := $(intermediateDir)/.marker
+$(eval intermediateDir := $(BUILDDIR)/$(MODULE))
+$(eval intermediateDirObj := $(intermediateDir)/.marker)
 
-$(intermediateDirObj):
-	$(SILENT) mkdir -p $(intermediateDir)
-	$(SILENT) touch $@
+$(eval $(call make-intermediate-dir))
 
 LOCAL_C_SOURCES += $(filter %.c,$(LOCAL_SRCS))
 LOCAL_OBJS += $(addprefix $(intermediateDir)/, $(patsubst %.c,%.o,$(LOCAL_C_SOURCES)))
