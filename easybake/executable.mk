@@ -11,7 +11,7 @@ cflags := $(LOCAL_CXXFLAGS) $(CXXFLAGS) -MMD
 $(foreach file,$(LOCAL_CPP_SOURCES),$(eval $(call cpp_template,$(file))))
 
 $(foreach lib,$(LOCAL_SHARED_LIBS),$(eval LOCAL_OBJS += $(BUILDDIR)/$(lib)/lib$(lib).so))
-
+$(foreach lib,$(LOCAL_STATIC_LIBS),$(eval LOCAL_OBJS += $(BUILDDIR)/$(lib)/$(lib).a))
 
 LOCAL_EXE := $(MODULE)
 
