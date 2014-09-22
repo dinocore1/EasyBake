@@ -1,7 +1,7 @@
 
 CC := gcc
 CXX := g++
-LD := g++
+LD := ld
 
 EASYBAKEDIR := $(dir $(lastword $(MAKEFILE_LIST)))
 TOP := $(abspath $(EASYBAKEDIR)..)
@@ -10,10 +10,10 @@ BUILDDIR := build
 
 SILENT := @
 
-DEFINE_MODULE := $(abspath $(EASYBAKEDIR)/module.mk)
-BUILD_LIBRARY := $(abspath $(EASYBAKEDIR)/library.mk)
-BUILD_EXE := $(abspath $(EASYBAKEDIR)/executable.mk)
-COMPILE := $(abspath $(EASYBAKEDIR)/compile.mk)
+DEFINE_MODULE := $(EASYBAKEDIR)module.mk
+BUILD_LIBRARY := $(EASYBAKEDIR)library.mk
+BUILD_EXE := $(EASYBAKEDIR)executable.mk
+COMPILE := $(EASYBAKEDIR)compile.mk
 
 my-dir = $(dir $(lastword $(MAKEFILE_LIST)))
 
@@ -39,20 +39,28 @@ $(OBJ): $(intermediateDirObj) $(SRC)
 endef
 
 define c_template
+$(eval intermediateDir := $(BUILDDIR)/$(MODULE)/$(dir $(1)))
+$(eval intermediateDirObj := $(intermediateDir)/.marker)
 $(eval COMPILER := $(CC))
-$(eval SRC := $(1))
-$(eval OBJ := $(intermediateDir)/$(1:.c=.o))
-$(eval DEPEND := $(intermediateDir)/$(1:.c=.d))
+$(eval SRC := $(LOCAL_PATH)$(1))
+$(eval OBJ := $(BUILDDIR)/$(MODULE)/$(1:.c=.o))
+$(eval DEPEND := $(BUILDDIR)/$(MODULE)/$(1:.c=.d))
+$(eval LOCAL_OBJS += $(OBJ))
 
+$(eval $(call make-intermediate-dir))
 $(eval $(call compile))
 endef
 
 define cpp_template
+$(eval intermediateDir := $(BUILDDIR)/$(MODULE)/$(dir $(1)))
+$(eval intermediateDirObj := $(intermediateDir)/.marker)
 $(eval COMPILER := $(CXX))
-$(eval SRC := $(1))
-$(eval OBJ := $(intermediateDir)/$(1:.cpp=.o))
-$(eval DEPEND := $(intermediateDir)/$(1:.cpp=.d))
+$(eval SRC := $(LOCAL_PATH)$(1))
+$(eval OBJ := $(BUILDDIR)/$(MODULE)/$(1:.cpp=.o))
+$(eval DEPEND := $(BUILDDIR)/$(MODULE)/$(1:.cpp=.d))
+$(eval LOCAL_OBJS += $(OBJ))
 
+$(eval $(call make-intermediate-dir))
 $(eval $(call compile))
 endef
 
@@ -65,7 +73,7 @@ all:
 clean:
 	rm -rf $(BUILDDIR)
 
-include $(wildcard $(TOP)/easybake.mk)
+include easybake.mk
 
 all: $(ALL_MODULES)
 
